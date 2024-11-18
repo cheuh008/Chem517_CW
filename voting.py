@@ -9,17 +9,8 @@
 #  5. `borda(preferences, tie_break)` -> int
 #  6. `STV(preferences, tie_break)` -> int
 #
-# Notes:
-#  - Each function is defined within a region to explain what and how it works before defining it.
-#  - Each line of code within a function should refer to the region where the steps are explained in a little more detail
-#  - But as the compiler disregards the comments anwyas. Regions can be collapsed when not neeeded via VS Code
-#  - Regions do NOT include the code it describes
-#  - Which I personally think is cleaner. But is personal. not conventional
-#  - Repetitive bits of code is abstracted and then passed via helper functions. ie tie_break and calculate_points 
-#  - Each functions have Docstrings to provide essential details when being used. 
-#  - Each line of the code is commented and refrences the region to explain what is happening in more detail 
-#  - Some one line functions may be broken up to aid explaination
-#  - I recommend not leaving eveything collapsed shift + K and Shift + 0 in vs code
+# Documentation for this project and more details on the voting rules can be found at:
+#  - [Voting Mechanism Docs](https://github.com/cheuh008/Comp517_CW/wiki)
 #  - and refering to the docs as needed
 #  - A cleaner version of the code without all the regions is avalibale on https://github.com/cheuh008/Comp517_CW (should be)
 #
