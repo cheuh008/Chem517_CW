@@ -1,3 +1,17 @@
+﻿# Voting Mechanism Project
+
+## Overview
+
+This repository implements various voting mechanisms such as Dictatorship, Plurality, Scoring Rule, Veto, Borda Count, and Single Transferable Vote (STV).
+
+## How to Use
+
+1. Clone the repository.
+2. Run the voting mechanisms by calling the respective functions.
+3. Refer to the documentation for detailed usage of each mechanism.
+
+For more information, please refer to the detailed documentation below.
+
 ```python
 # ==============================================================================================================================================================================
 # region Project Brief: Voting Mechanism
