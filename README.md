@@ -1,18 +1,4 @@
-﻿# Voting Mechanism Project
-
-## Overview
-
-This repository implements various voting mechanisms such as Dictatorship, Plurality, Scoring Rule, Veto, Borda Count, and Single Transferable Vote (STV).
-
-## How to Use
-
-1. Clone the repository.
-2. Run the voting mechanisms by calling the respective functions.
-3. Refer to the documentation for detailed usage of each mechanism.
-
-For more information, please refer to the detailed documentation below.
-
-
+```python
 # ==============================================================================================================================================================================
 # region Project Brief: Voting Mechanism
 # ==============================================================================================================================================================================
@@ -53,7 +39,7 @@ For more information, please refer to the detailed documentation below.
 #   - Each method will raises a "NotImplementedError" if not implemented by subclass.
 # ==============================================================================================================================================================================
 # endregion
-```python
+
 class Preference:
     """
     Abstract base class for a preference interface.
@@ -85,7 +71,7 @@ class Preference:
             
         """
         raise NotImplementedError
-```
+
 # ==============================================================================================================================================================================
 # region Helper Function: Tie Break
 # ==============================================================================================================================================================================
@@ -96,7 +82,6 @@ class Preference:
 #   - next() is used as it after it identifies the first item, by iterating through each candidate "c" we try to match it to if they are in the list of winners
 # ==============================================================================================================================================================================
 # endregion
-```python
 def tie_break(candidates, winners):                              # Helper Function which abstract tie breaking by Returning the first candiate in winners
     """
     Resolve ties by selecting the first candidate from winners.
@@ -109,7 +94,7 @@ def tie_break(candidates, winners):                              # Helper Functi
                      If no match is found, returns `None`.
     """
     return next((c for c in candidates if c in winners), None)  # Returns first candiate that appears in winners 
-```
+
 # ==============================================================================================================================================================================
 # region Helper Function: Calculate Points
 # ==============================================================================================================================================================================
@@ -130,7 +115,6 @@ def tie_break(candidates, winners):                              # Helper Functi
 #   5. The winnning Cadidate (int) is then returned (unless theres a tie in which case it calls the tie_break() function)
 # ==============================================================================================================================================================================
 # endregion
-```python
 def calculate_points(preferences, tie_break, scoring_fn):                                   # Helper Function which abstracts points calulating to find winning candidate
     """
     Calculates the points for each candidate based on the given scoring function to determine a winner.
@@ -149,7 +133,7 @@ def calculate_points(preferences, tie_break, scoring_fn):                       
     highest_score = max(scores.values())                                                    # Step 3: Finding the highest score 
     winners = [c for c, s in scores.items() if s == highest_score]                          # Step 4: Match the candidate with the highest score as the winner(s)
     return tie_break(preferences.candidates(), winners) if len(winners) > 1 else winners[0] # Step 5. Return winning candidate, uses tie_break if needed
-```
+
 # ==============================================================================================================================================================================
 # region Voting Mechanism 1. Dictatorship Function
 # ==============================================================================================================================================================================
@@ -159,7 +143,6 @@ def calculate_points(preferences, tie_break, scoring_fn):                       
 #   - The winning candidate is the one ranked highest (rank 0) by the dictator.
 # ==============================================================================================================================================================================
 # endregion
-```python
 def dictatorship(preferences, agent):                               # Voting Mechanism 1
     """
     Implements the Dictatorship voting mechanism, where a single agent (voter) unilaterally decides the winning candidate.
@@ -206,7 +189,7 @@ def scoring_rule(preferences, score_vector, tie_break_agent):   # Voting Mechani
     tie_break_fn = lambda c, w: tie_break(sorted(c,                         # As the candidates are sorted, the tie break function also needs to be sorted so that it returns the right candidate first
         key=lambda x: preferences.get_preference(x, tie_break_agent)), w)   # Same as before, but this time we use the tie_break_agent to get the winner
     return calculate_points(preferences, tie_break_fn, scoring_fn)          # the winning candidate is found by using the points calculator from above...
-```
+
 # ==============================================================================================================================================================================
 # region Voting Mechanism 3. Plurality Function
 # ==============================================================================================================================================================================
@@ -219,7 +202,6 @@ def scoring_rule(preferences, score_vector, tie_break_agent):   # Voting Mechani
 #   - The calculate_points() funtion then returns the winning candidate with the highest score
 # ==============================================================================================================================================================================
 # endregion
-```python
 def plurality(preferences, tie_break):
     """
     Plurality rule: each voter's top choice receives one point.
@@ -236,7 +218,7 @@ def plurality(preferences, tie_break):
         {c: scores[c] + 1 for c in prefs.candidates()           # loops through each candidate as "c" to award points
          if prefs.get_preference(c, voter) == 0})               # points only given if it is ranked as top choice by voter 
     return calculate_points(preferences, tie_break, scoring_fn) # returns winner via calculate_points
-```
+
 # ==============================================================================================================================================================================
 # region Voting Mechanism 4. Veto Function
 # ==============================================================================================================================================================================
@@ -248,7 +230,6 @@ def plurality(preferences, tie_break):
 #       - and as before this one line been broken up by comments for clarity
 # ==============================================================================================================================================================================
 # endregion
-```
 def veto(preferences, tie_break):                               # Voting Mechanism 4. Veto Function
     """
     Veto rule: all but the lowest-ranked candidate get points.
@@ -292,7 +273,7 @@ def borda(preferences, tie_break):                              # Voting Mechani
         {c: scores[c] + len(prefs.candidates()) - 1 - prefs.get_preference(c, voter) # Points are assigned inversely to rank ( - 1 as list starts at 0)
          for c in prefs.candidates()})                          # Loops through each candidate as "c" 
     return calculate_points(preferences, tie_break, scoring_fn) # returns winner via calculate_points
-```
+
 # ==============================================================================================================================================================================
 # region Voting Mechanism 6. Single Transferable Vote (STV) Function 
 # ==============================================================================================================================================================================
@@ -306,7 +287,6 @@ def borda(preferences, tie_break):                              # Voting Mechani
 #       - which lets us find, and eliminate the lowest scoring candidate, and iterate until theres only 1 iteration of candidate left as the winner
 # ==============================================================================================================================================================================
 # endregion
-```python
 def STV(preferences, tie_break):                                                # Voting Mechanism 6 Single Transferable Vote (STV) Function
     """
     STV rule: candidates with fewest votes are iteratively eliminated until one remains.
@@ -327,7 +307,3 @@ def STV(preferences, tie_break):                                                
         candidates -= {c for c, count in scores.items() if count == min_count}  # Step 2c: Eliminate that candidate with the lowest votes
     return next(iter(candidates), None)                                         # Step 3: Return the last remaining candidate as the winner
 ```
-
-## Links
-
-- [Voting Mechanisms Documentation](https://github.com/cheuh008/Chem517_CW/wiki)
